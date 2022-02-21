@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikHandlers, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import CountryDropdown from './CountryDropdown';
 import DisplayFormikError from '../components/DisplayFormikError';
@@ -27,12 +27,19 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 function Registration() {
+    const [submitted, setSubmitted] = React.useState<boolean>(false);
+    const [frmValues, setFrmValues] = React.useState<typeof INITIAL_VALUES>(INITIAL_VALUES);
+
+    React.useEffect(() => {
+        setFrmValues(INITIAL_VALUES);
+    }, [submitted])
 
     const handleFormSubmit = (
         values: typeof INITIAL_VALUES,
-        { resetForm }: { resetForm: () => void }
+        { setSubmitting, setErrors, setStatus, resetForm }: any
     ) => {
-        console.log(values, " values");
+        console.log(values, ' values');
+        setSubmitted(true);
         // Saving data using fetch API or axios
         // fetch('{website}/register', {
         //     method: 'POST',
@@ -48,18 +55,22 @@ function Registration() {
         //     .catch((error) => {
         //         console.error('Error:', error);
         //     });
+        // Reset Form when successfully saved
         resetForm();
+        setSubmitting(false);
+        setErrors(false);
+        setStatus({ success: true })
     };
 
     return (
         <div className='form-container'>
             <Formik
-                initialValues={INITIAL_VALUES}
+                initialValues={frmValues}
                 onSubmit={handleFormSubmit}
                 validationSchema={VALIDATION_SCHEMA}
                 enableReinitialize={true}
             >
-                {({ handleChange, handleSubmit, resetForm, values, setFieldValue }) => {
+                {({ handleChange, handleSubmit, resetForm, values, setFieldValue, handleBlur }) => {
                     const handleCountryChange = (val: string) => {
                         setFieldValue('country', val);
                     }
@@ -67,9 +78,9 @@ function Registration() {
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <h1>Register</h1>
-                                <p>Please fill in this form to create an account.</p>
+                                {/* Display Loader when submmiting */}
+                                {submitted ? <p style={{ color: 'green', fontWeight: 600 }}>'Your account has been created.'</p> : <p>Please fill in this form to create an account.</p>}
                                 <hr />
-
                                 <div className='Form-Group-Container'>
                                     <div><label htmlFor="firstName" >First Name</label></div>
                                     <input
@@ -78,6 +89,8 @@ function Registration() {
                                         name="firstName"
                                         id="firstName"
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.firstName}
                                     />
                                     <DisplayFormikError name="firstName" />
                                 </div>
@@ -89,6 +102,7 @@ function Registration() {
                                         name="lastName"
                                         id="lastName"
                                         onChange={handleChange}
+                                        value={values.lastName}
                                     />
                                     <DisplayFormikError name="lastName" />
                                 </div>
@@ -100,16 +114,16 @@ function Registration() {
                                         name="phone"
                                         id="phone"
                                         onChange={handleChange}
+                                        value={values.phone}
                                     />
                                     <DisplayFormikError name="phone" />
                                 </div>
                                 <div className='Form-Group-Container'>
                                     <div><label htmlFor="country">Country</label></div>
-                                    <CountryDropdown onChange={handleCountryChange} />
+                                    <CountryDropdown onChange={handleCountryChange} value={values.country} />
                                     <DisplayFormikError name="country" />
                                 </div>
                                 <hr />
-
                                 <button type="button" onClick={() => resetForm()}>Reset</button> <button type="submit">Register</button>
                             </div>
                         </form>

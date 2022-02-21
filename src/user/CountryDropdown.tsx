@@ -9,9 +9,10 @@ type CountryType = {
 
 type Props = {
     onChange: (countryCode: string) => void;
+    value: string;
 }
 
-function CountryDropdown({ onChange }: Props) {
+function CountryDropdown({ onChange, value }: Props) {
     const handleChange = (event: any) => {
         event.stopPropagation();
 
@@ -19,7 +20,7 @@ function CountryDropdown({ onChange }: Props) {
     }
 
     return (
-        <select name='country' onChange={handleChange}>
+        <select name='country' onChange={handleChange} value={value}>
             <option value=''>Please Select</option>
             {Countries.map((country: CountryType) => {
                 return (
