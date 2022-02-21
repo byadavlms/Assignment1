@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DisplayFormikError renders correctly 1`] = `
+<FormikConnect(ErrorMessageImpl)
+  name="fieldName"
+>
+  <Component />
+</FormikConnect(ErrorMessageImpl)>
+`;
+
+exports[`DisplayFormikError renders correctly 2`] = `
+<FormikConnect(ErrorMessageImpl)
+  name="fieldName"
+>
+  <Component />
+</FormikConnect(ErrorMessageImpl)>
+`;
+
+exports[`DisplayFormikError should mount and recieve name as props 1`] = `
+<FormikConnect(ErrorMessageImpl)
+  name="fieldName"
+>
+  <Component />
+</FormikConnect(ErrorMessageImpl)>
+`;

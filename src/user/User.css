@@ -1,0 +1,13 @@
+.form-container {
+    margin: 5px;
+}
+
+.Form-Group-Container {
+    display: block;
+    margin: 20px;
+}
+
+.Form-Group-Container div {
+    display: inline-block;
+    width: 130px;
+}
