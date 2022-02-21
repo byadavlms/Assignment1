@@ -2,8 +2,6 @@
 
 ## How to Run ?
 
-In the project directory:
-
 #### `Step #1: Make sure you have installed node.js version 17.x.x on your system`
 #### `Step #1: Clone the repository`
 #### `Step #3: then run -   npm run install or npm install, this will installed all the required node modules`
