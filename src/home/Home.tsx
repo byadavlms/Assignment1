@@ -6,7 +6,7 @@ function Home() {
     return (
         <React.Fragment>
             <h1>Home Page</h1>
-            <Link to={'register'}>Register</Link>
+            <Link to={'register'}> User Registration </Link> | <Link to={'anagram-test'}> Anagram Test Function </Link>
         </React.Fragment>
     )
 }
