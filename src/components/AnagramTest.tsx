@@ -2,12 +2,56 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { isAnagram } from '../utils';
+
 function AnagramTest() {
+    const [anagramStatus, setAnagramStatus] = React.useState<string>('');
+    const [operand1, setOperand1] = React.useState<string>('');
+    const [operand2, setOperand2] = React.useState<string>('');
+
+    const handleCheckAnagram = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
+        const isTrue = isAnagram(operand1, operand2);
+
+        if (isTrue) {
+            setAnagramStatus('The strings you entered are anagram!');
+        } else {
+            setAnagramStatus('');
+        }
+    }
+
     return (
         <React.Fragment>
             <h1>Anagram Test Function</h1>
             <Link to={'/'}>Home</Link>
-            <div style={{
+            <div>
+                <div className='Form-Group-Container'>
+                    <input
+                        type="text"
+                        placeholder="Enter First String..."
+                        name="operand1"
+                        id="operand1"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOperand1(e.target.value)}
+                        style={{
+                            marginRight: '10px'
+                        }}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter Second String..."
+                        name="operand2"
+                        id="operand2"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOperand2(e.target.value)}
+                        style={{
+                            marginRight: '10px'
+                        }}
+                    />
+                    <button onClick={handleCheckAnagram}>Check Anagram</button>
+                    {anagramStatus && <p style={{ color: 'green', fontWeight: 600 }}>{anagramStatus}</p>}
+                </div>
+            </div>
+            {/* <div style={{
                 margin: '25px',
                 padding: '10px',
                 background: '#333',
@@ -40,7 +84,7 @@ isAnagram('cellar', 'recall');
                 <i>
                     Note: You can find "TempTracker" class file on the root.
                 </i>
-            </p>
+            </p> */}
         </React.Fragment>
     )
 }
